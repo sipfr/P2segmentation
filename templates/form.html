@@ -1,0 +1,13 @@
+<form action="/data" method = "POST" enctype="multipart/form-data">
+    <p>Choisir un fichier : <input type="file"
+       id="file" name="image"
+       accept="image/png, image/jpeg" onchange="loadFile(event)"></p>
+       <img id="output" width="400" />
+    <p><input id="button" type = "submit" value = "Segmenter l'image"/></p>
+</form>
+<script>
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
