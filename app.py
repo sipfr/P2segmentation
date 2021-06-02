@@ -137,7 +137,7 @@ def data():
       
         return render_template('data.html',image=image_path, label=saved_label)
  
-app.run(host='0.0.0.0', port=5002, debug=False)
+#app.run(host='0.0.0.0', port=5002, debug=False)
 
 
 # In[ ]:
