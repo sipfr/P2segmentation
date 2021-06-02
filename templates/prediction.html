@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <title>Prédiction du sentiment d'un tweet</title>
+    </head>
+
+    <body>
+        <h1>Prédiction du sentiement d'un tweet</h1>
+        <form action="/prediction" method = "POST">
+            <p>Saisir un Tweet : <input type = "text" name = "Tweet" id="saisie" autofocus/></p>
+            <p><input type = "submit" value = "Faire une prédiction" id="button" /></p>
+        </form>
+        {% if tweet %}
+            <p>Prédiction pour le tweet '{{tweet}}' : <span id="result" style="background-color: {{couleur}};"> {{resultat}} </span></p>
+            <div class="main-slider">
+                Négatif
+                    <input
+                        type="range"
+                        name="predic"
+                        min="0"
+                        max="10"
+                        value={{valeur}}
+                        disabled
+                        class="slider"
+                    >
+                Positif
+                <br>
+            </div>
+            <div class="main-slider">
+                Neutre
+            </div>
+        {% endif %}
+    </body>
+    <style>
+        .main-slider{
+            left: 0px;
+            text-align: center;
+            vertical-align: center;
+            width: 400px;
+
+        }
+        .slider{
+            background: linear-gradient(90deg, red, green) ;
+            width: 250px;
+        }
+        #result{
+            color:#FFFFFF ;
+            border: 1px solid #223445;
+            border-radius: 18px ;
+            padding: 5px ;
+            padding-right: 10px;
+            padding-left: 10px;
+            display:inline-block;
+            font-weight: bold;
+        }
+        #button{
+            background:#35618a;
+            color:#FFFFFF ;
+            border: 1px solid #223445;
+            border-radius: 18px ;
+            padding: 10px ;
+            display:inline-block;
+        }
+        #saisie{
+            background:#b0d0ee;
+            color: black ;
+            border: 1px solid #223445;
+            border-radius: 5px ;
+            padding: 5px ;
+            display:inline-block;
+            max-width: 500px ;
+            width: 100% ;
+            margin-right: 10px ;
+        }
+     </style>
+</html>
+

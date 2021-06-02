@@ -1,1 +1,3 @@
-{}
+{
+    "azureML.defaultWorkspaceId": "/subscriptions/9438e113-2fe7-4057-b972-f0d9e03f09f9/resourceGroups/OpenClassRooms-P2/providers/Microsoft.MachineLearningServices/workspaces/espace-de-travail-P2"
+}
