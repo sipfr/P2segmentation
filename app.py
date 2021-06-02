@@ -9,7 +9,6 @@
 #!pip install tensorflow-gpu
 
 
-# In[ ]:
 
 
 from flask import Flask
