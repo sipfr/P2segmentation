@@ -7,8 +7,6 @@
 #!pip install tensorflow-gpu
 
 
-
-
 from flask import Flask
 from flask import render_template, request, session
 import tensorflow as tf
