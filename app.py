@@ -30,7 +30,7 @@ alpha=0.2
 beta = (1.0 - alpha)
 
 model_name = 'UNetAug.h5'
-path_saved_model = 'datasets/datasets/models/'
+path_saved_model = '/datasets/datasets/models/'
 path_image_test = 'static/images/'
 
 num_label = 8
