@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'p2segmentation'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_f1599cf3d23349f2864c4be04d90aa80 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_2f1fab4b333d4f3990025b86b1c056b3 }}
