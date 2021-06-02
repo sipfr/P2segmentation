@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In[1]:
+
 
 #get_ipython().system('pip install opencv-python--headless')
 #get_ipython().system('pip install Flask')
 #!pip install tensorflow-gpu
 
 
+# In[ ]:
+
 from flask import Flask
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect
 import tensorflow as tf
-#import tensorflow_hub as hub
-#import tensorflow_text as text
 import numpy as np
 #from tensorflow.keras.preprocessing.text import Tokenizer
 #from tensorflow.keras.preprocessing.text import tokenizer_from_json
@@ -28,10 +30,15 @@ alpha=0.2
 beta = (1.0 - alpha)
 
 model_name = 'UNetAug.h5'
-path_saved_model = './UNet_save_modelAug/'
+path_saved_model = 'datasets/datasets/models/'
+path_image_test = 'static/images/'
 
 num_label = 8
 image_size = 256
+
+# récupération des images de test
+image_list = [ f for f in os.listdir(path_image_test) if os.path.isfile(os.path.join(path_image_test,f)) ]
+print("Liste des images : ", image_list)
 
 def IoU(y_true, y_pred, **kwargs):
     y_pred = tf.argmax(y_pred, axis=-1)
@@ -72,20 +79,21 @@ def pred_png(path_png):
 @app.route("/")
 def hello():
     ver = tf.__version__
-    return "Hello, segmentation d'images" 
+    return "Segmentation d'image. Aller à /form pour soumettre des images" 
 
 
 @app.route('/form')
 def form():
-    return render_template('form.html')
+    return render_template('form.html', image_list=image_list, path_image_test=path_image_test )
  
 @app.route('/data', methods = ['POST', 'GET'])
 def data():
         if request.method == 'GET':
-            return f"The URL /data is accessed directly. Try going to '/form' to submit form"
+            return f"L'URL /data n'est pas accessible directement. Essayez l'aller à '/form' pour soumettre des données"
         if request.method == 'POST':
             image = request.files["image"]
-        
+            image_test = request.form.get('option')
+
         # gestion des sessions
         if 'visits' in session:
             session['visits'] = session.get('visits') + 1  # reading and updating session data
@@ -95,17 +103,28 @@ def data():
         id = session['visits']
         image_id = str(id) + ".png"
         label_id = str(id) + "_label.png"
-
-        image.save(os.path.join(app.config["IMAGE_UPLOADS"], image_id))
-        print("Image saved : ", image_id )
-        image_path = os.path.join(app.config["IMAGE_UPLOADS"], image_id)
-
+            
+        # si image téléchargée
+        if image:
+            print("traitement de l'image téléchargée")
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image_id))
+            print("Image saved : ", image_id )
+            image_path = os.path.join(app.config["IMAGE_UPLOADS"], image_id)
+            
+        # si image sélectionnée dans la liste des images
+        elif image_test:
+            print("traitement de l'image sélectionnée")
+            image_path=os.path.join(path_image_test, image_test)
+            print("Image selected : ",image_path)
+        else:
+            print("aucun image sélectionnée ou téléchargée")
+            return redirect('form')
         
         saved_label = os.path.join(app.config["IMAGE_UPLOADS"], label_id)
         h,w,pred_label = pred_png(image_path)
         
         size =[image_size,image_size]
-        pred_label = tf.image.resize(pred_label, size)
+        #pred_label = tf.image.resize(pred_label, size)
         pred_label = tf.cast(pred_label, tf.int32)/8*256
         image_png = tf.keras.preprocessing.image.save_img(saved_label, pred_label, data_format="channels_last", scale=False)
   
@@ -118,7 +137,7 @@ def data():
       
         return render_template('data.html',image=image_path, label=saved_label)
  
-#app.run(host='0.0.0.0', port=5002, debug=False)
+app.run(host='0.0.0.0', port=5002, debug=False)
 
 
 # In[ ]:
