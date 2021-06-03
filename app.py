@@ -23,6 +23,7 @@ import io
 import os
 import json
 import cv2
+import PIL
 #import matplotlib.pyplot as plt
 #from tensorflow.keras.layers import Input, Flatten, Dense, Conv2D, BatchNormalization, LeakyReLU, Dropout, Activation
 
