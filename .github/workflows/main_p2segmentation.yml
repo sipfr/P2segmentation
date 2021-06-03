@@ -33,9 +33,9 @@ jobs:
     # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
     # delete-artifact
-    - uses: geekyeggo/delete-artifact@v1
-      with:
-        name: python-app
+    #- uses: geekyeggo/delete-artifact@v1
+    #  with:
+    #    name: python-app
 
     - name: Upload artifact for deployment jobs
       uses: actions/upload-artifact@v2
