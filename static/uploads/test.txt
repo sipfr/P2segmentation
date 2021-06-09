@@ -1,1 +1,1 @@
-uploads : répertoire des images et des maks générés
+uploads : répertoire des images et des masks générés
